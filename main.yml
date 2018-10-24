@@ -1,0 +1,25 @@
+---
+ - name: install on ubuntu
+   apt:
+     name: apache2
+     state: latest
+     update_cache: yes
+   when:
+     - ansible_os_family == "Debian"
+   notify:
+     - start debian service
+ - name: install on redhat
+   yum:
+     name: httpd
+     state: latest
+     update_cache: yes
+   when:
+     - ansible_os_family == "RedHat"
+   notify:
+     - start centos service
+
+ - name: Copying the webserver
+   copy:
+     src: index.html
+     dest: /var/www/html
+
